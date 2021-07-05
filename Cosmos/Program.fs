@@ -1,25 +1,27 @@
-namespace Cosmos
+module Web
 
-open System
-open System.Collections.Generic
-open System.IO
-open System.Linq
-open System.Threading.Tasks
-open Microsoft.AspNetCore
+open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
-open Microsoft.Extensions.Configuration
 open Microsoft.Extensions.Hosting
-open Microsoft.Extensions.Logging
+open Microsoft.Extensions.DependencyInjection
+open Giraffe
 
-module Program =
-    let createHostBuilder args =
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(fun webBuilder ->
-                webBuilder.UseStartup<Startup>() |> ignore
-            )
+let webApp = choose [ route "/" >=> text "benga" ]
 
-    [<EntryPoint>]
-    let main args =
-        createHostBuilder(args).Build().Run()
+let configureApp (app: IApplicationBuilder) = app.UseGiraffe webApp
 
-        0 // Exit code
+let configureServices (services: IServiceCollection) = services.AddGiraffe() |> ignore
+
+[<EntryPoint>]
+let main _ =
+    Host
+        .CreateDefaultBuilder()
+        .ConfigureWebHostDefaults(fun webHostBuilder ->
+            webHostBuilder
+                .Configure(configureApp)
+                .ConfigureServices(configureServices)
+            |> ignore)
+        .Build()
+        .Run()
+
+    0
