@@ -7,6 +7,8 @@ ProjectSection(SolutionItems) = preProject
 	paket.dependencies = paket.dependencies
 EndProjectSection
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cosmos.Tests", "Cosmos.Tests\Cosmos.Tests.fsproj", "{03E0FDD9-5653-47EA-A937-06990AC44097}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,5 +19,9 @@ Global
 		{470D4A11-4C2E-4000-B6C0-0FD5C9041C7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{470D4A11-4C2E-4000-B6C0-0FD5C9041C7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{470D4A11-4C2E-4000-B6C0-0FD5C9041C7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03E0FDD9-5653-47EA-A937-06990AC44097}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03E0FDD9-5653-47EA-A937-06990AC44097}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03E0FDD9-5653-47EA-A937-06990AC44097}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03E0FDD9-5653-47EA-A937-06990AC44097}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
