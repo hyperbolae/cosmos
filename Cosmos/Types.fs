@@ -65,7 +65,7 @@ module Message =
         <*> (Username.create username)
 
 module Offset =
-    let mkOffset offset =
+    let create offset =
         if offset > 0 then
             offset |> Offset |> Ok
         else
