@@ -7,8 +7,9 @@ open Microsoft.Extensions.DependencyInjection
 open Giraffe
 open Cosmos.Endpoints
 
-let webApp = choose [ Threads.handler
-                      Updates.handler ]
+let webApp =
+    choose [ Threads.handler
+             Updates.handler ]
 
 let configureApp (app: IApplicationBuilder) = app.UseGiraffe webApp
 
