@@ -16,11 +16,6 @@ module Result =
         | Ok a' -> Ok(f a')
         | Error e -> Error e
 
-    let mapError f e : Result<'b> =
-        match e with
-        | Ok a' -> Ok a'
-        | Error e' -> Error(f e')
-
     let bind f a : Result<'b> =
         match a with
         | Ok a' -> f a'
