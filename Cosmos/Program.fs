@@ -5,8 +5,10 @@ open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Giraffe
+open Cosmos.Endpoints
 
-let webApp = choose [ route "/" >=> text "benga" ]
+let webApp = choose [ Threads.handler
+                      Updates.handler ]
 
 let configureApp (app: IApplicationBuilder) = app.UseGiraffe webApp
 
