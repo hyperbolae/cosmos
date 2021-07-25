@@ -40,4 +40,7 @@ type ExpiringCache<'a>() =
         | true, (expiry, value) -> handleExisting expiry value
         | false, _ -> Error NotFoundError
 
-    member _.Values() = cache.Values |> Seq.map snd
+    member _.Values() =
+        cache.Values
+        |> Seq.filter (fun (expiry, _) -> expiry > DateTime.UtcNow)
+        |> Seq.map snd

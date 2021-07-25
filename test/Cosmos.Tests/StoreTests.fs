@@ -56,11 +56,14 @@ module ExpiringCacheTests =
         Assert.Equal(expected, item)
 
     [<Fact>]
-    let ``Can get items from expiring cache`` () =
+    let ``Can get non-expired items from expiring cache`` () =
         let cache = ExpiringCache()
         let ttl = TimeToLive 1<hr>
         cache.Add ttl "1" "test1" |> ignore
         cache.Add ttl "2" "test2" |> ignore
+        
+        let oldTtl = TimeToLive -1<hr>
+        cache.Add oldTtl "3" "expired item" |> ignore
 
         let items = cache.Values ()
 
