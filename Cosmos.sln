@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cosmos", "Cosmos\Cosmos.fsproj", "{470D4A11-4C2E-4000-B6C0-0FD5C9041C7F}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cosmos", "src\Cosmos\Cosmos.fsproj", "{470D4A11-4C2E-4000-B6C0-0FD5C9041C7F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "paket", "paket", "{E99CB7C3-CBE8-4D83-8843-FCFD491358EC}"
 ProjectSection(SolutionItems) = preProject
 	paket.dependencies = paket.dependencies
 EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cosmos.Tests", "Cosmos.Tests\Cosmos.Tests.fsproj", "{03E0FDD9-5653-47EA-A937-06990AC44097}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Cosmos.Tests", "test\Cosmos.Tests\Cosmos.Tests.fsproj", "{03E0FDD9-5653-47EA-A937-06990AC44097}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{27BEC0DE-5D62-40F6-9085-D9C6EE9A9907}"
+ProjectSection(SolutionItems) = preProject
+	.gitignore = .gitignore
+	README.md = README.md
+	.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+	.config\dotnet-tools.json = .config\dotnet-tools.json
+EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
