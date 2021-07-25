@@ -5,6 +5,10 @@ module Result =
     type Error =
         | ValidationError of string
         | MessageCollisionError
+        | NotFoundError
+        | AlreadyExistsError
+        | ExpiredError
+        | StoreError
         | AggregateError of Error list
 
     type Result<'success> = Result<'success, Error>

@@ -6,6 +6,7 @@
   <ItemGroup>
     <Compile Include="Prelude.fs" />
     <Compile Include="Types.fs" />
+    <Compile Include="Store.fs" />
     <Compile Include="Endpoints.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

@@ -1,14 +1,20 @@
 namespace Cosmos.Types
 
 open System
+open System.Text.RegularExpressions
 open Cosmos.Prelude.Result
+
+type TopicId = TopicId of string
+
+[<Measure>]
+type hr
+
+type TimeToLive = TimeToLive of int<hr>
 
 type Body = private Body of string
 type Username = private Username of string
 
-type Message =
-    { Body: Body
-      Username: Username }
+type Message = { Body: Body; Username: Username }
 
 type Direction =
     | Up
@@ -34,9 +40,18 @@ type Update =
 type Updates = Update seq
 
 type Topic =
-    { Topic: Message
+    { Id: TopicId
+      Topic: Message
       Threads: Map<Direction, Thread>
       LatestOffset: Offset }
+
+module TopicId =
+    let create () =
+        let guid =
+            Guid.NewGuid().ToByteArray()
+            |> Convert.ToBase64String
+
+        Regex.Replace(guid, "[/+=]", "", RegexOptions.Compiled)
 
 module Body =
     let create (body: string) =
@@ -56,12 +71,9 @@ module Username =
 
 module Message =
     let create body username =
-        let create b u =
-            { Body = b
-              Username = u }
+        let create b u = { Body = b; Username = u }
 
-        create
-        <!> (Body.create body)
+        create <!> (Body.create body)
         <*> (Username.create username)
 
 module Offset =
