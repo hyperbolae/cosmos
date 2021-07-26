@@ -41,6 +41,9 @@ type ExpiringCache<'a>() =
         | false, _ -> Error NotFoundError
 
     member _.Values() =
+        for KeyValue(id, (expiry, _)) in cache do
+            if expiry < DateTime.UtcNow then
+                cache.Remove id |> ignore
+        
         cache.Values
-        |> Seq.filter (fun (expiry, _) -> expiry > DateTime.UtcNow)
         |> Seq.map snd
