@@ -7,7 +7,6 @@ module Result =
         | MessageCollisionError
         | NotFoundError
         | AlreadyExistsError
-        | ExpiredError
         | StoreError
         | AggregateError of Error list
 
