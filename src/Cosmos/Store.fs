@@ -1,14 +1,15 @@
 namespace Cosmos.Store
 
 open System
+open System.Collections.Concurrent
 open System.Collections.Generic
 open Cosmos.Types
 open Cosmos.Prelude.Result
 
 type ExpiringCache<'a>() =
-    let cache = Dictionary<string, DateTime * 'a>()
+    let cache = ConcurrentDictionary<string, DateTime * 'a>()
 
-    member _.Add (TimeToLive ttl) id item =
+    member _.Create (TimeToLive ttl) id item =
         let validUntil = DateTime.UtcNow.AddHours(float ttl)
 
         let addToCache () =
@@ -28,13 +29,27 @@ type ExpiringCache<'a>() =
         | true, (expiry, _) -> handleExisting expiry
         | false, _ -> addToCache ()
 
-    member _.Get id =
+    member _.Read id =
         let handleExisting expiry value =
             if expiry < DateTime.UtcNow then
                 cache.Remove id |> ignore
-                Error ExpiredError
+                Error NotFoundError
             else
                 Ok value
+
+        match cache.TryGetValue id with
+        | true, (expiry, value) -> handleExisting expiry value
+        | false, _ -> Error NotFoundError
+
+    member _.Update id item =
+        let handleExisting expiry existingItem =
+            if expiry < DateTime.UtcNow then
+                cache.Remove id |> ignore
+                Error NotFoundError
+            else
+                match cache.TryUpdate (id, (expiry, item), (expiry, existingItem)) with
+                | true -> Ok item
+                | false -> Error StoreError
 
         match cache.TryGetValue id with
         | true, (expiry, value) -> handleExisting expiry value
