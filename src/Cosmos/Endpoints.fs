@@ -14,4 +14,3 @@ module Updates =
 
     let handler : HttpHandler =
         choose [ route "" >=> text "benga updates" ]
-

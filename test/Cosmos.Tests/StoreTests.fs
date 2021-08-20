@@ -37,7 +37,8 @@ module ExpiringCacheTests =
         let ttl = TimeToLive 1<hr>
         cache.Create ttl "1" "test" |> ignore
 
-        let item = cache.Create ttl "1" "this already exists"
+        let item =
+            cache.Create ttl "1" "this already exists"
 
         let expected = Error AlreadyExistsError
 
@@ -62,17 +63,13 @@ module ExpiringCacheTests =
         let ttl = TimeToLive 1<hr>
         cache.Create ttl "1" "test1" |> ignore
         cache.Create ttl "2" "test2" |> ignore
-        
+
         let oldTtl = TimeToLive -1<hr>
         cache.Create oldTtl "3" "expired item" |> ignore
 
-        let items =
-            cache.Values ()
-            |> Seq.sort
+        let items = cache.Values() |> Seq.sort
 
-        let expected =
-            [ "test1"; "test2" ]
-            |> List.sort
+        let expected = [ "test1"; "test2" ] |> List.sort
 
         Assert.Equal(expected, items)
 
@@ -84,7 +81,7 @@ module ExpiringCacheTests =
 
         let newItem = "updated test"
         cache.Update "1" newItem |> ignore
-        
+
         let item = cache.Read "1"
         let expected = Ok newItem
 

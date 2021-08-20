@@ -7,7 +7,8 @@ open Cosmos.Types
 open Cosmos.Prelude.Result
 
 type ExpiringCache<'a>() =
-    let cache = ConcurrentDictionary<string, DateTime * 'a>()
+    let cache =
+        ConcurrentDictionary<string, DateTime * 'a>()
 
     member _.Create (TimeToLive ttl) id item =
         let validUntil = DateTime.UtcNow.AddHours(float ttl)
@@ -47,7 +48,7 @@ type ExpiringCache<'a>() =
                 cache.Remove id |> ignore
                 Error NotFoundError
             else
-                match cache.TryUpdate (id, (expiry, item), (expiry, existingItem)) with
+                match cache.TryUpdate(id, (expiry, item), (expiry, existingItem)) with
                 | true -> Ok item
                 | false -> Error StoreError
 
@@ -56,9 +57,16 @@ type ExpiringCache<'a>() =
         | false, _ -> Error NotFoundError
 
     member _.Values() =
-        for KeyValue(id, (expiry, _)) in cache do
+        for KeyValue (id, (expiry, _)) in cache do
             if expiry < DateTime.UtcNow then
                 cache.Remove id |> ignore
-        
-        cache.Values
-        |> Seq.map snd
+
+        cache.Values |> Seq.map snd
+
+type UpdatesStore() =
+    let store = ExpiringCache<Updates>()
+
+    member _.GetFromIndex(conversationId, index) =
+        match store.Read conversationId with
+        | Ok (updates) -> updates |> Seq.skip index |> Ok
+        | Error (error) -> Error(error)

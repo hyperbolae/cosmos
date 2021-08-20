@@ -8,9 +8,10 @@ open Giraffe
 open Cosmos.Endpoints
 
 let webApp =
-    subRoute "/api"
-        ( choose [ subRoute "/threads" Threads.handler
-                   subRoute "/updates" Updates.handler ])
+    subRoute
+        "/api"
+        (choose [ subRoute "/threads" Threads.handler
+                  subRoute "/updates" Updates.handler ])
 
 let configureApp (app: IApplicationBuilder) = app.UseGiraffe webApp
 
