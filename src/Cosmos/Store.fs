@@ -66,7 +66,15 @@ type ExpiringCache<'a>() =
 type UpdatesStore() =
     let store = ExpiringCache<Updates>()
 
-    member _.GetFromIndex(conversationId, index) =
-        match store.Read conversationId with
-        | Ok (updates) -> updates |> Seq.skip index |> Ok
-        | Error (error) -> Error(error)
+    member this.GetFromIndex id index =
+        match store.Read id with
+        | Ok updates -> updates |> Seq.skip index |> Ok
+        | Error error -> Error(error)
+
+    member this.GetAll id = this.GetFromIndex id 0
+
+    member this.Add id update =
+        match store.Read id with
+        | Ok updates -> store.Update id (Seq.append updates [ update ])
+        | Error NotFoundError -> store.Create(TimeToLive 20<hr>) id (Seq.singleton update)
+        | Error error -> Error(error)
