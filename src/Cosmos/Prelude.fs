@@ -42,3 +42,20 @@ module Result =
 
     let (<*>) = apply
     let (<!>) = map
+    
+    let private traverse f xs =
+        let folder x xs =
+            bind (fun h ->
+                bind (fun t -> seq { yield h; yield! t } |> Ok ) xs) (f x)
+
+        Seq.foldBack folder xs (Ok Seq.empty)
+
+    let sequence xs = traverse id xs
+
+    type ResultBuilder() =
+        member _.Bind(v, f) = Result.bind f v
+        member _.Return v = Ok v
+        member _.Zero () = Ok ()
+
+    let res = ResultBuilder()
+
