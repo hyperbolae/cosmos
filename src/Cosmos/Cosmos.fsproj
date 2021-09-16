@@ -5,7 +5,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Prelude.fs" />
-    <Compile Include="Types.fs" />
+    <Compile Include="Domain.fs" />
+    <Compile Include="Services.fs" />
     <Compile Include="Store.fs" />
     <Compile Include="Endpoints.fs" />
     <Compile Include="Program.fs" />

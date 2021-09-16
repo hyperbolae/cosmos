@@ -2,7 +2,7 @@ namespace Cosmos.Tests.StoreTests
 
 open Xunit
 open Cosmos.Prelude.Result
-open Cosmos.Types
+open Cosmos.Domain
 open Cosmos.Store
 
 module ExpiringCacheTests =

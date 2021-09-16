@@ -3,7 +3,7 @@ namespace Cosmos.Store
 open System
 open System.Collections.Concurrent
 open System.Collections.Generic
-open Cosmos.Types
+open Cosmos.Domain
 open Cosmos.Prelude.Result
 
 type ExpiringCache<'a>() =
